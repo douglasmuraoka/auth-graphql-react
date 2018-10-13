@@ -1,0 +1,27 @@
+const graphql = require('graphql');
+const { GraphQLObjectType, GraphQLString } = graphql;
+const UserType = require('./types/user_type');
+const AuthService = require('../services/auth');
+
+/**
+ * This is the file where we define our mutations.
+ * The mutations should be "fields" of the "mutation" root type.
+ */
+const mutation = new GraphQLObjectType({
+  name: 'mutation',
+  fields: {
+    signup: {
+      type: UserType, // This is the return type of this mutation
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      // This request object is coming from Express :)
+      resolve(parentValue, { email, password }, req) {
+        return AuthService.signup({ email, password, req });
+      }
+    }
+  }
+});
+
+module.exports = mutation;
