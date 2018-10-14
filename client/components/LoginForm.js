@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AuthForm from './AuthForm';
 import { graphql } from 'react-apollo';
 import mutation from '../mutations/login';
+import query from '../queries/currentUser';
 
 /**
  * This is the component that renders a form containing
@@ -14,7 +15,8 @@ class LoginForm extends Component {
       variables: {
         email,
         password
-      }
+      },
+      refetchQueries: [{ query }]
     });
   }
 
