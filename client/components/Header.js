@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { graphql } from 'react-apollo';
+import currentUser from '../queries/currentUser';
 
 /**
  * This is the component that will display the "Sign In"
@@ -6,6 +8,7 @@ import React, { Component } from 'react';
  */
 class Header extends Component {
   render() {
+    console.log(this.props.data.user); 
     return (
       <div>
         Header
@@ -14,4 +17,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default graphql(currentUser)(Header);
