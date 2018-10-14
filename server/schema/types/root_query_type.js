@@ -7,10 +7,12 @@ const RootQueryType = new GraphQLObjectType({
   fields: {
     // Query that returns the currently logged user.
     // If user is logged in, Passport will populate the req.user object.
-    user: { type: UserType },
-    resolve(parentValue, args, req) {
-      return req.user;
-    }
+    user: {
+      type: UserType,
+      resolve(parentValue, args, req) {
+        return req.user;
+      }
+    },
   }
 });
 
