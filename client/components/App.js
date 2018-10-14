@@ -6,7 +6,7 @@ import Header from './Header';
  * any children provided by the Router.
  */
 const App = props => (
-  <div>
+  <div className="container">
     <Header />
     {props.children}
   </div>
