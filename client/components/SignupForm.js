@@ -3,6 +3,7 @@ import AuthForm from './AuthForm';
 import { graphql } from 'react-apollo';
 import mutation from '../mutations/signup';
 import query from '../queries/currentUser';
+import { hashHistory } from 'react-router';
 
 /**
  * This is the component that renders a form containing
@@ -14,6 +15,18 @@ class SignupForm extends Component {
     super(props);
 
     this.state = { errors: []};
+  }
+
+  /**
+   * Since this component is wrapped by the "currentUser" query,
+   * whenever that query is ran, this component is automatically
+   * updated by Apollo. So the trick here is, whenever we have
+   * a logged in user, we should redirect to the dashboard.
+   */
+  componentWillUpdate(nextProps) {
+    if(nextProps.data.user) {
+      hashHistory.push('/dashboard');
+    }
   }
 
   onSubmit({ email, password }) {
@@ -39,4 +52,6 @@ class SignupForm extends Component {
   }
 }
 
-export default graphql(mutation)(SignupForm);
+export default graphql(query)(
+  graphql(mutation)(SignupForm)
+);
